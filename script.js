@@ -1,5 +1,5 @@
 
-let availableSeats = 10;  // Initial number of available seats
+let availableSeats = 60;  // Initial number of available seats
 
 // Update the UI with the current available seats
 function updateSeats() {
