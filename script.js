@@ -1,22 +1,44 @@
-
-let availableSeats = 60;  // Initial number of available seats
+let availableSeats = 30;  // total seats
 
 // Update the UI with the current available seats
 function updateSeats() {
     document.getElementById('available-seats').innerText = availableSeats;
 }
 
-// Book a ticket and update the status
+// Book tickets after asking user
 function bookTicket() {
-    if (availableSeats > 0) {
-        availableSeats--;
+    let toBook = prompt("Enter number of tickets to book (max 6):");
+
+    // Convert input to number
+    toBook = parseInt(toBook);
+
+    const msg = document.getElementById("confirmation");
+
+    if (isNaN(toBook) || toBook < 1) {
+        msg.style.color = "red";
+        msg.innerText = "⚠️ Please enter a valid number of tickets.";
+        return;
+    }
+
+    if (toBook > 6) {
+        msg.style.color = "red";
+        msg.innerText = "⚠️ You can book a maximum of 6 tickets at once.";
+        return;
+    }
+
+    if (availableSeats - toBook >= 0) {
+        availableSeats -= toBook;
         updateSeats();
-        document.getElementById('confirmation').style.display = 'block';
-        document.getElementById('book-ticket').disabled = true;  // Disable button once ticket is booked
+        msg.style.color = "green";
+        msg.innerText = `✅ Successfully booked ${toBook} ticket(s)!`;
     } else {
-        alert("Sorry, no available seats left!");
+        availableSeats = 0;
+        updateSeats();
+        msg.style.color = "red";
+        msg.innerText = "❌ Seats filled!";
+        document.getElementById('book-ticket').disabled = true;
     }
 }
 
-// Initially update seats display
+// Initialize seat display
 updateSeats();
